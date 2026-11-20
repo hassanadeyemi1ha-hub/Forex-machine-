@@ -1,0 +1,6 @@
+{
+  "name": "QuantFX",
+  "description": "Multi-asset algorithmic trading robot platform for Forex, Metals, Crypto, and Stocks with real-time candlestick charts, automated bots, live telemetry, and secure Google authentication.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

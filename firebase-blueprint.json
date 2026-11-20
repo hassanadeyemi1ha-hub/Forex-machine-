@@ -1,0 +1,137 @@
+{
+  "entities": {
+    "TraderAccount": {
+      "title": "TraderAccount",
+      "description": "Authenticated user's trading account, equity, leverage, and risk guardrail settings.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID of the trader" },
+        "displayName": { "type": "string", "description": "Trader display name" },
+        "email": { "type": "string", "description": "Verified Google account email" },
+        "balance": { "type": "number", "description": "Current realized account balance in USD" },
+        "startingBalance": { "type": "number", "description": "Initial baseline equity in USD" },
+        "leverage": { "type": "integer", "description": "Account leverage ratio (e.g. 30, 50, 100, 500)" },
+        "maxDailyDrawdownPct": { "type": "number", "description": "Kill-switch max drawdown percentage" },
+        "killSwitchTriggered": { "type": "boolean", "description": "Whether automated drawdown kill-switch paused all bots" },
+        "requireTradeConfirm": { "type": "boolean", "description": "Whether manual orders prompt for confirmation" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp of creation" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp of last update" }
+      },
+      "required": [
+        "userId", "displayName", "email", "balance", "startingBalance",
+        "leverage", "maxDailyDrawdownPct", "killSwitchTriggered",
+        "requireTradeConfirm", "createdAt", "updatedAt"
+      ]
+    },
+    "TradingBot": {
+      "title": "TradingBot",
+      "description": "Automated algorithmic multi-asset trading robot configuration and cumulative performance metrics.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID" },
+        "name": { "type": "string", "description": "Robot display name" },
+        "pair": {
+          "type": "string",
+          "enum": [
+            "EUR/USD", "GBP/USD", "USD/JPY", "USD/CHF", "AUD/USD", "USD/CAD",
+            "XAU/USD", "XAG/USD", "XPT/USD",
+            "BTC/USD", "ETH/USD", "SOL/USD", "XRP/USD",
+            "AAPL", "NVDA", "TSLA", "MSFT"
+          ],
+          "description": "Trading instrument symbol across Forex, Metals, Crypto, and Stocks"
+        },
+        "strategy": {
+          "type": "string",
+          "enum": [
+            "EMA_CROSSOVER",
+            "RSI_REVERSAL",
+            "BREAKOUT_GRID",
+            "MACD_MOMENTUM",
+            "BOLLINGER_SQUEEZE",
+            "LONDON_OPEN_ORB",
+            "ICHIMOKU_CLOUD",
+            "FIBONACCI_SWING"
+          ],
+          "description": "Algorithmic execution engine"
+        },
+        "timeframe": {
+          "type": "string",
+          "enum": ["1M", "5M", "15M", "1H", "4H", "1D"],
+          "description": "Chart evaluation timeframe"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ACTIVE", "PAUSED"],
+          "description": "Execution state of the robot"
+        },
+        "lotSize": { "type": "number", "description": "Trade volume in standard lots" },
+        "stopLossPips": { "type": "integer", "description": "Stop-loss distance in pips/points/ticks" },
+        "takeProfitPips": { "type": "integer", "description": "Take-profit target in pips/points/ticks" },
+        "riskPercent": { "type": "number", "description": "Risk allocation percentage per trade" },
+        "totalTrades": { "type": "integer", "description": "Total closed executions" },
+        "winningTrades": { "type": "integer", "description": "Total profitable executions" },
+        "realizedPnl": { "type": "number", "description": "Cumulative realized PnL in USD" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp of creation" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp of last update" }
+      },
+      "required": [
+        "userId", "name", "pair", "strategy", "timeframe", "status",
+        "lotSize", "stopLossPips", "takeProfitPips", "riskPercent",
+        "totalTrades", "winningTrades", "realizedPnl", "createdAt", "updatedAt"
+      ]
+    },
+    "TradeRecord": {
+      "title": "TradeRecord",
+      "description": "Open or closed Forex, Metal, Crypto, or Stock position executed by a trading robot or manually.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner Firebase Auth UID" },
+        "botId": { "type": "string", "description": "Bot document ID or empty for manual trades" },
+        "botName": { "type": "string", "description": "Robot name or Manual Execution" },
+        "pair": {
+          "type": "string",
+          "enum": [
+            "EUR/USD", "GBP/USD", "USD/JPY", "USD/CHF", "AUD/USD", "USD/CAD",
+            "XAU/USD", "XAG/USD", "XPT/USD",
+            "BTC/USD", "ETH/USD", "SOL/USD", "XRP/USD",
+            "AAPL", "NVDA", "TSLA", "MSFT"
+          ]
+        },
+        "side": { "type": "string", "enum": ["BUY", "SELL"] },
+        "status": { "type": "string", "enum": ["OPEN", "CLOSED"] },
+        "lotSize": { "type": "number" },
+        "entryPrice": { "type": "number" },
+        "closePrice": { "type": "number" },
+        "stopLoss": { "type": "number" },
+        "takeProfit": { "type": "number" },
+        "realizedPnl": { "type": "number" },
+        "pips": { "type": "number" },
+        "closeReason": {
+          "type": "string",
+          "enum": ["OPEN", "TP_HIT", "SL_HIT", "BOT_EXIT", "MANUAL_CLOSE"]
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "userId", "botId", "botName", "pair", "side", "status",
+        "lotSize", "entryPrice", "closePrice", "stopLoss", "takeProfit",
+        "realizedPnl", "pips", "closeReason", "createdAt", "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/TraderAccount" },
+      "description": "Authenticated trader profile and risk guardrail settings."
+    },
+    "/users/{userId}/bots/{botId}": {
+      "schema": { "$ref": "#/entities/TradingBot" },
+      "description": "User's configured algorithmic multi-asset trading robots."
+    },
+    "/users/{userId}/trades/{tradeId}": {
+      "schema": { "$ref": "#/entities/TradeRecord" },
+      "description": "User's open positions and closed trade execution ledger."
+    }
+  }
+}

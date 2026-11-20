@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">QuantFX</string>
+    <string name="auth_subtitle_tag">FOREX • METALS • CRYPTO • STOCKS</string>
+    <string name="auth_hero_desc">QuantFX dark multi-asset algorithmic candlestick terminal artwork</string>
+    <string name="auth_headline">Automated Multi-Asset Trading &amp; Live Charts</string>
+    <string name="auth_feature_1_title">Google Identity Verification</string>
+    <string name="auth_feature_1_desc">Hardware-backed OAuth 2.0 session via Credential Manager</string>
+    <string name="auth_feature_2_title">Zero-Trust Cloud Sync</string>
+    <string name="auth_feature_2_desc">Per-user isolated FX, Metal, Crypto &amp; Stock bots and ledger</string>
+    <string name="auth_feature_3_title">Real-Time Multi-Asset Feeds</string>
+    <string name="auth_feature_3_desc">Live FX &amp; Crypto spot anchors, EMA/RSI/BB overlays &amp; SL/TP guardrails</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="auth_disclaimer">Simulated algorithmic execution across Forex, Metals, Crypto &amp; Stocks with live ECB FX and CoinGecko spot anchoring.</string>
+</resources>
